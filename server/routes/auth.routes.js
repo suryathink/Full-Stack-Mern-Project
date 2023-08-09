@@ -7,6 +7,7 @@ const blacklistTokenData = require("../models/blacklist");
 const User = require("../models/userModel");
 const mongoose = require('mongoose');
 const authRouter = express.Router();
+const jwt = require('jsonwebtoken');
 
 
 
@@ -164,6 +165,22 @@ authRouter.post('/getImages', authorization, async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+// authMiddleware not needed as token is already expired.  
+authRouter.get("/getnewtoken", (req, res) => {
+    const refreshtoken = req.headers.authorization?.split(" ")[1]
+    const decoded = jwt.verify(refreshtoken, process.env.REFRESH_SECRET)
+    if(decoded){
+      const token = jwt.sign({ userId: decoded.userId }, process.env.JWT_SECRET, {
+        expiresIn: 60  // in industry generally 7 days
+      });
+      return res.send(token)
+    }
+    else{
+      res.send("Invalid refresh token, plz login again")
+    }
+  })
 
 
    

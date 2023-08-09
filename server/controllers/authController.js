@@ -16,7 +16,7 @@ function generateToken(user){
         name: user.name,
     }
    console.log(payload);
-   return jwt.sign(payload,JWT_SECRET)
+   return jwt.sign(payload,JWT_SECRET,{expiresIn: 60 })
 }
 
 function verifyToken(token){
@@ -54,9 +54,13 @@ async function login(email,password){
          user = user.toJSON();
             if (bcrypt.compareSync(password, user.password)){
             delete user.password;
+            const refreshtoken = jwt.sign({ userId: user._id }, process.env.REFRESH_SECRET, {
+                expiresIn: 240  // in industry generally 28 days, refresh token validity must be greater than token 
+              });
             return {
                 data:{
                     token: generateToken(user),
+                    refreshtoken,
                     user,
                 }    
             }
