@@ -1,5 +1,3 @@
-
-
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -17,6 +15,7 @@ import { Button } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import CircularProgress from "@mui/material/CircularProgress";
 import LoginIcon from '@mui/icons-material/Login';
+import config from "./config";
 
 function NavbarComponent() {
   const navigate = useNavigate();
@@ -34,7 +33,8 @@ function NavbarComponent() {
   };
 
   const handleLogout = async () => {
-    const backendUrl = `http://localhost:8080`;
+    const BACKEND_DEPLOYED_LINK = config.API_URL
+    const backendUrl = `${BACKEND_DEPLOYED_LINK}`;
 
     try {
       setLoading(true);
@@ -71,7 +71,7 @@ function NavbarComponent() {
     <Navbar style={styles.NavbarStyle} expand="lg" className="bg-body-tertiary">
       <Container  >
         <Navbar.Brand style={{width:"50px",height:"50px"}}  onClick={() => { navigate("/")}} >
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv1eThZSlOEJ6n_rv1WmziEZAXGGZjypIx5w&usqp=CAU"  alt="Logo"/>
+          <img style={{width:"50px",height:"50px"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv1eThZSlOEJ6n_rv1WmziEZAXGGZjypIx5w&usqp=CAU"  alt="Logo"/>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -108,6 +108,10 @@ function NavbarComponent() {
               > 
                 <MenuItem onClick={() => {  navigate("/favorites") }}>
                   Favorites
+                </MenuItem>
+
+                <MenuItem onClick={() => {  navigate("/profile") }}>
+                  Profile
                 </MenuItem>
 
                 <MenuItem onClick={() => {handleLogout() }}>

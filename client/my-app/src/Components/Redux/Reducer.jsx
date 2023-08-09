@@ -2,6 +2,7 @@ let initialData = {
   data: [],
   allData: [], 
   user: [], 
+  profileInfo:[]
 };
 
 
@@ -23,6 +24,11 @@ const myReducer = (state = initialData, action) => {
         return {
             ...state,
             user: action.payload,
+        };
+    case "PROFILEINFO":
+        return {
+            ...state,
+            profileInfo: action.payload,
         };
        
         default:

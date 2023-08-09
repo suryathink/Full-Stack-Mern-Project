@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {useDispatch ,useSelector} from 'react-redux'
 import { FaBookmark, FaCloudDownloadAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
-
+import config from "./config"
 const Favorites = () => {
 
   const token  = localStorage.getItem('token')
@@ -25,10 +25,10 @@ const Favorites = () => {
       }
    })
      
-  const fetchFavoriteDataArray = async (token,id) => {
+  const fetchFavoriteDataArray = async (token) => {
     setLoading(true);
-    try {
-       const apiUrl = `http://localhost:8080/getfavoritedata/${id}?page=10`
+    try { 
+      const apiUrl = `${config.API_URL}/getfavoritedata/`;
        const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -39,7 +39,7 @@ const Favorites = () => {
 
       const jsonData = await response.json();
        setFavoriteData(jsonData.user.favorites)
-    
+          
     } catch (error) {
       console.error('Error fetching data:', error);
    
@@ -54,10 +54,12 @@ const Favorites = () => {
  // Function to add an image to favorites
  const addToFavorites = async (favID) => {
   try {
-    const token = localStorage.getItem("token"); // Replace 'token' with the key used to store the token in localStorage.
 
-    const response = await fetch(
-      "http://localhost:8080/favorite",
+    const BACKEND_DEPLOYED_LINK = config.API_URL
+   
+    const token = localStorage.getItem("token");
+ 
+    const response = await fetch(`${BACKEND_DEPLOYED_LINK}/favorite`,
       {
         method: "POST",
         headers: {

@@ -12,9 +12,18 @@ export const myActionAllData = (data,dispatch) =>{
      payload:data,
     });
  }
+ 
 export const myActionUser = (data,dispatch) =>{
     dispatch({
      type:"USER",
+     payload:data,
+    });
+ }
+
+
+export const myActionProfileInfo = (data,dispatch) =>{
+    dispatch({
+     type:"PROFILEINFO",
      payload:data,
     });
  }

@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { blue } from '@mui/material/colors';
 import CircularProgress from "@mui/material/CircularProgress";
-
+import config from './config';
 
 function Copyright(props) {
      return (
@@ -47,7 +47,9 @@ export default function SignUp() {
      const sendDataToServer = async () => {
         try {
           // POST request 
-          const response = await fetch('http://localhost:8080/signup', {
+          const BACKEND_DEPLOYED_LINK = config.API_URL;
+
+          const response = await fetch(`${BACKEND_DEPLOYED_LINK}/signup`, {
             method: 'POST',         
             body: JSON.stringify({
               name: nameState+"",

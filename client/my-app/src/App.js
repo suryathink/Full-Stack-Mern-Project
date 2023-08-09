@@ -6,22 +6,22 @@ import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Favorites from './Components/Favorites';
 import { ToastContainer } from "react-toastify";
-import { useState } from 'react';
-import Dialog from './Components/Dialog';
 import PrivateComp from './Components/Context/Privateroute';
+import Profile from './Components/Profile';
+
 
 function App() {
 
   return (
     <div className="App">
-        <ToastContainer/>
-    
+     <ToastContainer/>
      <NavbarComponent/>
      <Routes>
      <Route path = "/" element = {<PrivateComp ><Home/></PrivateComp>} />
      <Route path = "/signup" element = {<Signup/>} />
      <Route path = "/login" element = {<Login/>} />
      <Route path = "/favorites" element = {<PrivateComp><Favorites/></PrivateComp>} />
+     <Route path = "/profile" element = {<PrivateComp><Profile/></PrivateComp>} />
      <Route path = "*" element = {<Login/>} />
      </Routes>
     </div>

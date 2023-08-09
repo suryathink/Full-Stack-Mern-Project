@@ -14,8 +14,10 @@ app.use(express.json());
 
 app.use('/', authRouter);
 
+const BACKEND_DEPLOYED_LINK = process.env.BACKEND_DEPLOYED_LINK
+
 connectDatabase().then(() => {
   app.listen(8080, () =>
-    console.log("Server listening on http://localhost:8080")
+    console.log(`Server listening on ${BACKEND_DEPLOYED_LINK}`)
   );
 });

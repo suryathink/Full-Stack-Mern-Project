@@ -4,12 +4,14 @@ import { FaBookmark, FaCloudDownloadAlt } from "react-icons/fa";
 import {useDispatch ,useSelector} from 'react-redux'
 import {myActionData,myActionAllData, myActionUser} from "./Redux/Action"
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-
-
+import {myActionProfileInfo} from "./Redux/Action";
+import config from "./config";
 // https://pantyhose-dugong.cyclic.app/getallData
 const Home = () => {
+
+  const BACKEND_DEPLOYED_LINK = config.API_URL;
   const itemsPerPage = 10;
-  const apiUrl = "http://localhost:8080/getImages";
+  const apiUrl = `${BACKEND_DEPLOYED_LINK}/getImages`;
 
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +34,6 @@ const Home = () => {
    
     try {
       const token = localStorage.getItem("token");
-
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -48,7 +49,9 @@ const Home = () => {
       const jsonData = await response.json();
       myActionUser(jsonData.user.favorites,dispatch)
       setFavoritesArray(jsonData.user.favorites);
+      // console.log("json Data in Home",jsonData)
 
+      myActionProfileInfo(jsonData.user,dispatch)
 
       if (jsonData.images.length > 0) {
         // Adding new data to the existing previous data
@@ -91,7 +94,8 @@ const Home = () => {
 
   const allDataMethod = async () =>{
     try {
-      const data = await fetch (`http://localhost:8080/getallData`)
+      const BACKEND_DEPLOYED_LINK = config.API_URL;
+      const data = await fetch (`${BACKEND_DEPLOYED_LINK}/getallData`)
       const jsonData = await data.json();
       setAllData(jsonData)
       myActionAllData(jsonData, dispatch);
@@ -124,9 +128,11 @@ const Home = () => {
   // Function to add an image to favorites
   const addToFavorites = async (favID) => {
     try {
+      const BACKEND_DEPLOYED_LINK = config.API_URL
+
       const token = localStorage.getItem("token"); 
       const response = await fetch(
-        "http://localhost:8080/favorite",
+        `${BACKEND_DEPLOYED_LINK}/favorite`,
         {
           method: "POST",
           headers: {

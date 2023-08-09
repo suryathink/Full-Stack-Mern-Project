@@ -16,7 +16,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ctx } from "./Context/AuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import config from "./config";
 function Copyright(props) {
   return (
     <Typography
@@ -69,7 +69,9 @@ export default function SignIn() {
   };
 
   async function loginUser(email, password) {
-    const apiUrl = "http://localhost:8080/login";
+    const BACKEND_DEPLOYED_LINK = config.API_URL;
+
+    const apiUrl = `${BACKEND_DEPLOYED_LINK}/login`;
 
     try {
       setLoading(true);
